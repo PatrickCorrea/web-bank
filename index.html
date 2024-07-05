@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Verde - Interface do Usuário</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img class="image-logo" src="./assets/banco.png" alt="Web Bank">
+            <h1>Web Bank</h1>
+        </div>
+        <div id="saldo-container">
+            <p id="saldo">Saldo: R$ 1.000,00</p>
+            <button id="toggle-saldo" onclick="toggleSaldoVisibility()">👁️</button>
+        </div>
+        <div id="profile-photo">
+            <img src="./assets/profile-photo.jpg" alt="Foto de Perfil">
+        </div>
+    </header>
+
+    <nav>
+        <button id="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+    </nav>
+
+    <main>
+        <section id="greeting">
+            <h2>Olá, João Silva</h2>
+            <p>Bem vindo de volta !</p>
+        </section>
+
+        <section id="quick-actions">
+            <button class="nav-button" onclick="openLoanModal()">Empréstimo</button>
+            <button class="nav-button" onclick="showOperation('deposito')">Depósito</button>
+            <button class="nav-button" onclick="showOperation('saldo')">Saldo</button>
+            <button class="nav-button" onclick="openTransferModal()">Transferência</button>
+        </section>
+
+        <section id="card-info">
+            <div class="card mastercard">
+                <div class="card-chip"></div>
+                <div class="card-number">5500 0000 0000 0004 <button onclick="copyToClipboard('5500 0000 0000 0004')"><i
+                            class="fas fa-copy"></i></button></div>
+                <div class="card-info">
+                    <span class="card-valid">Validade: 12/25 <button onclick="copyToClipboard('12/25')"><i
+                                class="fas fa-copy"></i></button></span>
+                    <span class="card-name">João Silva <button onclick="copyToClipboard('João Silva')"><i
+                                class="fas fa-copy"></i></button></span>
+                </div>
+                <div class="card-brand"></div>
+            </div>
+        </section>
+
+        <section id="recent-transactions">
+            <h3>Transações Recentes</h3>
+            <div id="transactionsChart"></div>
+            <ul id="transactions-list"></ul>
+        </section>
+
+        <section id="financial-tips">
+            <h3>Dicas Financeiras</h3>
+            <p id="tip-of-the-day"></p>
+        </section>
+    </main>
+
+    <div id="transfer-modal" class="modal">
+        <div class="modal-content">
+            <h2>Realizar Transferência</h2>
+            <input type="number" id="transfer-amount" placeholder="Valor a ser transferido">
+            <input type="text" id="recipient-name" placeholder="Nome completo do destinatário">
+            <input type="text" id="recipient-account" placeholder="Conta do destinatário">
+            <input type="text" id="recipient-cpf" placeholder="CPF do destinatário">
+            <button onclick="finishTransfer()">Finalizar Transferência</button>
+            <button onclick="closeModal('transfer-modal')">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="loan-modal" class="modal">
+        <div class="modal-content">
+            <h2>Empréstimo Disponível</h2>
+            <p>Valor disponível para empréstimo: R$ <span id="loan-amount">5000.00</span></p>
+            <input type="number" id="loan-value" placeholder="Valor do empréstimo">
+            <select id="loan-installments">
+                <option value="">Selecione o número de parcelas</option>
+                <option value="6">6 meses</option>
+                <option value="12">12 meses</option>
+                <option value="18">18 meses</option>
+                <option value="24">24 meses</option>
+            </select>
+            <p>Juros: 79% ao mês</p>
+            <p>Valor total a pagar: R$ <span id="total-loan-amount">0.00</span></p>
+            <button onclick="finishLoan()">Finalizar Empréstimo</button>
+            <button onclick="closeModal('loan-modal')">Cancelar</button>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="success-animation">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                </svg>
+            </div>
+            <h2>Transação Concluída!</h2>
+        </div>
+    </div>
+
+    <div id="chat-container" class="hidden">
+        <div id="chat-header">
+            <h3>Chat de Suporte</h3>
+            <button onclick="toggleChat()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <button onclick="clearChat()" id="clear-chat"><i class="fas fa-trash"></i> Apagar Conversa</button>
+    </div>
+
+    <footer>
+        <button id="help-button" onclick="toggleChat()">Posso ajudar?</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
